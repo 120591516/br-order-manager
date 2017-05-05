@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="br.order.mapper.BrPermissionMapper" >
+  <resultMap id="BaseResultMap" type="br.order.pojo.BrPermission" >
+    <id column="permission_id" property="permissionId" jdbcType="BIGINT" />
+    <result column="permission_name" property="permissionName" jdbcType="VARCHAR" />
+    <result column="permission_status" property="permissionStatus" jdbcType="INTEGER" />
+    <result column="permission_url" property="permissionUrl" jdbcType="VARCHAR" />
+    <result column="permission_describe" property="permissionDescribe" jdbcType="VARCHAR" />
+    <result column="permission_level" property="permissionLevel" jdbcType="INTEGER" />
+    <result column="permission_parent_id" property="permissionParentId" jdbcType="BIGINT" />
+    <result column="permission_create_time" property="permissionCreateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    permission_id, permission_name, permission_status, permission_url, permission_describe, 
+    permission_level, permission_parent_id, permission_create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="br.order.pojo.BrPermissionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from br_permission
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from br_permission
+    where permission_id = #{permissionId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from br_permission
+    where permission_id = #{permissionId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="br.order.pojo.BrPermissionExample" >
+    delete from br_permission
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="br.order.pojo.BrPermission" >
+    insert into br_permission (permission_id, permission_name, permission_status, 
+      permission_url, permission_describe, permission_level, 
+      permission_parent_id, permission_create_time
+      )
+    values (#{permissionId,jdbcType=BIGINT}, #{permissionName,jdbcType=VARCHAR}, #{permissionStatus,jdbcType=INTEGER}, 
+      #{permissionUrl,jdbcType=VARCHAR}, #{permissionDescribe,jdbcType=VARCHAR}, #{permissionLevel,jdbcType=INTEGER}, 
+      #{permissionParentId,jdbcType=BIGINT}, #{permissionCreateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="br.order.pojo.BrPermission" >
+    insert into br_permission
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="permissionId != null" >
+        permission_id,
+      </if>
+      <if test="permissionName != null" >
+        permission_name,
+      </if>
+      <if test="permissionStatus != null" >
+        permission_status,
+      </if>
+      <if test="permissionUrl != null" >
+        permission_url,
+      </if>
+      <if test="permissionDescribe != null" >
+        permission_describe,
+      </if>
+      <if test="permissionLevel != null" >
+        permission_level,
+      </if>
+      <if test="permissionParentId != null" >
+        permission_parent_id,
+      </if>
+      <if test="permissionCreateTime != null" >
+        permission_create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="permissionId != null" >
+        #{permissionId,jdbcType=BIGINT},
+      </if>
+      <if test="permissionName != null" >
+        #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionStatus != null" >
+        #{permissionStatus,jdbcType=INTEGER},
+      </if>
+      <if test="permissionUrl != null" >
+        #{permissionUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionDescribe != null" >
+        #{permissionDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionLevel != null" >
+        #{permissionLevel,jdbcType=INTEGER},
+      </if>
+      <if test="permissionParentId != null" >
+        #{permissionParentId,jdbcType=BIGINT},
+      </if>
+      <if test="permissionCreateTime != null" >
+        #{permissionCreateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="br.order.pojo.BrPermissionExample" resultType="java.lang.Integer" >
+    select count(*) from br_permission
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update br_permission
+    <set >
+      <if test="record.permissionId != null" >
+        permission_id = #{record.permissionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.permissionName != null" >
+        permission_name = #{record.permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permissionStatus != null" >
+        permission_status = #{record.permissionStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.permissionUrl != null" >
+        permission_url = #{record.permissionUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permissionDescribe != null" >
+        permission_describe = #{record.permissionDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permissionLevel != null" >
+        permission_level = #{record.permissionLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.permissionParentId != null" >
+        permission_parent_id = #{record.permissionParentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.permissionCreateTime != null" >
+        permission_create_time = #{record.permissionCreateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update br_permission
+    set permission_id = #{record.permissionId,jdbcType=BIGINT},
+      permission_name = #{record.permissionName,jdbcType=VARCHAR},
+      permission_status = #{record.permissionStatus,jdbcType=INTEGER},
+      permission_url = #{record.permissionUrl,jdbcType=VARCHAR},
+      permission_describe = #{record.permissionDescribe,jdbcType=VARCHAR},
+      permission_level = #{record.permissionLevel,jdbcType=INTEGER},
+      permission_parent_id = #{record.permissionParentId,jdbcType=BIGINT},
+      permission_create_time = #{record.permissionCreateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="br.order.pojo.BrPermission" >
+    update br_permission
+    <set >
+      <if test="permissionName != null" >
+        permission_name = #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionStatus != null" >
+        permission_status = #{permissionStatus,jdbcType=INTEGER},
+      </if>
+      <if test="permissionUrl != null" >
+        permission_url = #{permissionUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionDescribe != null" >
+        permission_describe = #{permissionDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionLevel != null" >
+        permission_level = #{permissionLevel,jdbcType=INTEGER},
+      </if>
+      <if test="permissionParentId != null" >
+        permission_parent_id = #{permissionParentId,jdbcType=BIGINT},
+      </if>
+      <if test="permissionCreateTime != null" >
+        permission_create_time = #{permissionCreateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where permission_id = #{permissionId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="br.order.pojo.BrPermission" >
+    update br_permission
+    set permission_name = #{permissionName,jdbcType=VARCHAR},
+      permission_status = #{permissionStatus,jdbcType=INTEGER},
+      permission_url = #{permissionUrl,jdbcType=VARCHAR},
+      permission_describe = #{permissionDescribe,jdbcType=VARCHAR},
+      permission_level = #{permissionLevel,jdbcType=INTEGER},
+      permission_parent_id = #{permissionParentId,jdbcType=BIGINT},
+      permission_create_time = #{permissionCreateTime,jdbcType=TIMESTAMP}
+    where permission_id = #{permissionId,jdbcType=BIGINT}
+  </update>
+</mapper>

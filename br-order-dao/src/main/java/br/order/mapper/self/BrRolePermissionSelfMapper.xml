@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="br.order.mapper.self.BrRolePermissionSelfMapper">
+	<resultMap id="BaseResultMap" type="br.order.vo.OperationVo">
+		<id column="operation_id" property="operationId" jdbcType="INTEGER" />
+    <result column="operation_name" property="operationName" jdbcType="VARCHAR" />
+    <result column="operation_describe" property="operationDescribe" jdbcType="VARCHAR" />
+    <result column="permission_id" property="permissionId" jdbcType="INTEGER" />
+    <result column="operation_status" property="operationStatus" jdbcType="INTEGER" />
+    <result column="operation_createtime" property="operationCreatetime" jdbcType="TIMESTAMP" />
+
+	</resultMap>
+	<select id="insertRolePermission" parameterType="br.order.pojo.BrRolePermission"
+		resultType="int">
+		insert into br_role_permission values
+		<foreach collection="br.order.pojo.BrRolePermission" item="brRolePermission"
+			separator=",">
+			(null,#{brRolePermission.roleId},#{brPermission.permissionId})
+		</foreach>
+	</select>
+	<!-- 查询角色自己的权限 -->
+
+	<select id="selectPermissionByRoleId" parameterType="long"
+		resultType="br.order.pojo.permission.PermissionResult">
+		SELECT
+		p.permission_id id,
+		p.permission_name NAME,
+		p.permission_parent_id pId
+		FROM
+		br_permission p,
+		br_role_permission rp,
+		br_role r
+		WHERE
+		r.role_id =#{id}
+		AND p.permission_status = 0
+		AND r.role_id
+		= rp.role_id
+		AND rp.permission_id = p.permission_id;
+
+	</select>
+	<!-- 查询所有权限 -->
+	<select id="selectAllPermission" resultType="br.order.pojo.permission.PermissionResult">
+		select
+		p.permission_id id,
+		p.permission_name name,
+		p.permission_parent_id pId
+		from br_permission p
+
+	</select>
+	<!-- 查询可用的权限 -->
+	<select id="getPermissionListAndOpen" resultType="br.order.vo.PermissionVo">
+		select
+		b.permission_id permissionId,
+		b.permission_name permissionName,
+		b.permission_status permissionStatus,
+		b.permission_url permissionUrl,
+		b.permission_describe permissionDescribe,
+		b.permission_level permissionLevel,
+		b.permission_parent_id permissionParentId,
+		b.permission_create_time permissionCreateTime
+		from
+		br_permission b
+		WHERE b.permission_status=0
+	</select>
+	<!-- 更据角色ID查询自己的权限 -->
+	<select id="getPermissionListByRoleId" resultType="br.order.vo.PermissionVo"
+		parameterType="long">
+		select
+				b.permission_id permissionId,
+				b.permission_name permissionName,
+				b.permission_status permissionStatus,
+				b.permission_url permissionUrl,
+				b.permission_describe permissionDescribe,
+				b.permission_level permissionLevel,
+				b.permission_parent_id permissionParentId,
+				b.permission_create_time permissionCreateTime
+		from
+				br_role_permission c left JOIN br_permission b
+		ON
+		c.permission_id=b.permission_id
+		where c.role_id=#{roleId}
+		and b.permission_status=0;
+	</select>
+
+
+	<!-- 查询选中的可用的操作 -->
+	<select id="getBrOperationListByPermissionId" resultMap="BaseResultMap">
+		SELECT
+		b.operation_id ,
+		b.operation_name ,
+		b.operation_describe,
+		b.permission_id ,
+		b.operation_status ,
+		b.operation_createtime
+		FROM
+		br_operation b
+		WHERE b.operation_status=0 and b.permission_id = #{permissionId}
+	</select>
+	<!-- 添加权限(一级) -->
+	<insert id="insertPermission" parameterType="java.util.List">
+		INSERT INTO br_role_permission (
+			`role_permission_id`,
+			`role_id`,
+			`permission_id`)
+		VALUES
+		<foreach collection="firstIndex" item="index" separator=",">
+			(null,#{roleId},#{index})
+		</foreach>
+	</insert>
+	<!-- 添加二级菜单 -->
+	<insert id="insertTwoPermission">
+		INSERT INTO br_role_permission (
+			`role_permission_id`,
+			`role_id`,
+			`permission_id`)
+		VALUES
+		<foreach collection="secIndex" item="index" separator=",">
+			(null,#{roleId},#{index})
+		</foreach>
+	</insert>
+</mapper>

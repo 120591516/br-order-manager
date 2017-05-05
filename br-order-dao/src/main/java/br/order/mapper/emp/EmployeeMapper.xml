@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="br.order.mapper.emp.EmployeeMapper" >
+  <resultMap id="BaseResultMap" type="br.order.pojo.emp.Employee" >
+    <id column="emp_id" property="empId" jdbcType="BIGINT" />
+    <result column="br_user_id" property="brUserId" jdbcType="BIGINT" />
+    <result column="department_id" property="departmentId" jdbcType="BIGINT" />
+    <result column="emp_number" property="empNumber" jdbcType="VARCHAR" />
+    <result column="emp_name" property="empName" jdbcType="VARCHAR" />
+    <result column="emp_status" property="empStatus" jdbcType="INTEGER" />
+    <result column="emp_sex" property="empSex" jdbcType="INTEGER" />
+    <result column="nation_id" property="nationId" jdbcType="INTEGER" />
+    <result column="emp_birth_date" property="empBirthDate" jdbcType="TIMESTAMP" />
+    <result column="emp_identity_number" property="empIdentityNumber" jdbcType="VARCHAR" />
+    <result column="emp_marital_status" property="empMaritalStatus" jdbcType="INTEGER" />
+    <result column="emp_hometown" property="empHometown" jdbcType="VARCHAR" />
+    <result column="emp_familly_address" property="empFamillyAddress" jdbcType="VARCHAR" />
+    <result column="emp_phone" property="empPhone" jdbcType="VARCHAR" />
+    <result column="emp_email" property="empEmail" jdbcType="VARCHAR" />
+    <result column="emp_household_type" property="empHouseholdType" jdbcType="INTEGER" />
+    <result column="emp_registered_address" property="empRegisteredAddress" jdbcType="VARCHAR" />
+    <result column="emp_create_id" property="empCreateId" jdbcType="BIGINT" />
+    <result column="emp_create_name" property="empCreateName" jdbcType="VARCHAR" />
+    <result column="emp_create_time" property="empCreateTime" jdbcType="TIMESTAMP" />
+    <result column="emp_edit_id" property="empEditId" jdbcType="BIGINT" />
+    <result column="emp_edit_name" property="empEditName" jdbcType="VARCHAR" />
+    <result column="emp_edit_time" property="empEditTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    emp_id, br_user_id, department_id, emp_number, emp_name, emp_status, emp_sex, nation_id, 
+    emp_birth_date, emp_identity_number, emp_marital_status, emp_hometown, emp_familly_address, 
+    emp_phone, emp_email, emp_household_type, emp_registered_address, emp_create_id, 
+    emp_create_name, emp_create_time, emp_edit_id, emp_edit_name, emp_edit_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="br.order.pojo.emp.EmployeeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from employee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from employee
+    where emp_id = #{empId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from employee
+    where emp_id = #{empId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="br.order.pojo.emp.EmployeeExample" >
+    delete from employee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="br.order.pojo.emp.Employee" >
+    insert into employee (emp_id, br_user_id, department_id, 
+      emp_number, emp_name, emp_status, 
+      emp_sex, nation_id, emp_birth_date, 
+      emp_identity_number, emp_marital_status, emp_hometown, 
+      emp_familly_address, emp_phone, emp_email, 
+      emp_household_type, emp_registered_address, 
+      emp_create_id, emp_create_name, emp_create_time, 
+      emp_edit_id, emp_edit_name, emp_edit_time
+      )
+    values (#{empId,jdbcType=BIGINT}, #{brUserId,jdbcType=BIGINT}, #{departmentId,jdbcType=BIGINT}, 
+      #{empNumber,jdbcType=VARCHAR}, #{empName,jdbcType=VARCHAR}, #{empStatus,jdbcType=INTEGER}, 
+      #{empSex,jdbcType=INTEGER}, #{nationId,jdbcType=INTEGER}, #{empBirthDate,jdbcType=TIMESTAMP}, 
+      #{empIdentityNumber,jdbcType=VARCHAR}, #{empMaritalStatus,jdbcType=INTEGER}, #{empHometown,jdbcType=VARCHAR}, 
+      #{empFamillyAddress,jdbcType=VARCHAR}, #{empPhone,jdbcType=VARCHAR}, #{empEmail,jdbcType=VARCHAR}, 
+      #{empHouseholdType,jdbcType=INTEGER}, #{empRegisteredAddress,jdbcType=VARCHAR}, 
+      #{empCreateId,jdbcType=BIGINT}, #{empCreateName,jdbcType=VARCHAR}, #{empCreateTime,jdbcType=TIMESTAMP}, 
+      #{empEditId,jdbcType=BIGINT}, #{empEditName,jdbcType=VARCHAR}, #{empEditTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="br.order.pojo.emp.Employee" >
+    insert into employee
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="empId != null" >
+        emp_id,
+      </if>
+      <if test="brUserId != null" >
+        br_user_id,
+      </if>
+      <if test="departmentId != null" >
+        department_id,
+      </if>
+      <if test="empNumber != null" >
+        emp_number,
+      </if>
+      <if test="empName != null" >
+        emp_name,
+      </if>
+      <if test="empStatus != null" >
+        emp_status,
+      </if>
+      <if test="empSex != null" >
+        emp_sex,
+      </if>
+      <if test="nationId != null" >
+        nation_id,
+      </if>
+      <if test="empBirthDate != null" >
+        emp_birth_date,
+      </if>
+      <if test="empIdentityNumber != null" >
+        emp_identity_number,
+      </if>
+      <if test="empMaritalStatus != null" >
+        emp_marital_status,
+      </if>
+      <if test="empHometown != null" >
+        emp_hometown,
+      </if>
+      <if test="empFamillyAddress != null" >
+        emp_familly_address,
+      </if>
+      <if test="empPhone != null" >
+        emp_phone,
+      </if>
+      <if test="empEmail != null" >
+        emp_email,
+      </if>
+      <if test="empHouseholdType != null" >
+        emp_household_type,
+      </if>
+      <if test="empRegisteredAddress != null" >
+        emp_registered_address,
+      </if>
+      <if test="empCreateId != null" >
+        emp_create_id,
+      </if>
+      <if test="empCreateName != null" >
+        emp_create_name,
+      </if>
+      <if test="empCreateTime != null" >
+        emp_create_time,
+      </if>
+      <if test="empEditId != null" >
+        emp_edit_id,
+      </if>
+      <if test="empEditName != null" >
+        emp_edit_name,
+      </if>
+      <if test="empEditTime != null" >
+        emp_edit_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="empId != null" >
+        #{empId,jdbcType=BIGINT},
+      </if>
+      <if test="brUserId != null" >
+        #{brUserId,jdbcType=BIGINT},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=BIGINT},
+      </if>
+      <if test="empNumber != null" >
+        #{empNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="empName != null" >
+        #{empName,jdbcType=VARCHAR},
+      </if>
+      <if test="empStatus != null" >
+        #{empStatus,jdbcType=INTEGER},
+      </if>
+      <if test="empSex != null" >
+        #{empSex,jdbcType=INTEGER},
+      </if>
+      <if test="nationId != null" >
+        #{nationId,jdbcType=INTEGER},
+      </if>
+      <if test="empBirthDate != null" >
+        #{empBirthDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="empIdentityNumber != null" >
+        #{empIdentityNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="empMaritalStatus != null" >
+        #{empMaritalStatus,jdbcType=INTEGER},
+      </if>
+      <if test="empHometown != null" >
+        #{empHometown,jdbcType=VARCHAR},
+      </if>
+      <if test="empFamillyAddress != null" >
+        #{empFamillyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="empPhone != null" >
+        #{empPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="empEmail != null" >
+        #{empEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="empHouseholdType != null" >
+        #{empHouseholdType,jdbcType=INTEGER},
+      </if>
+      <if test="empRegisteredAddress != null" >
+        #{empRegisteredAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="empCreateId != null" >
+        #{empCreateId,jdbcType=BIGINT},
+      </if>
+      <if test="empCreateName != null" >
+        #{empCreateName,jdbcType=VARCHAR},
+      </if>
+      <if test="empCreateTime != null" >
+        #{empCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="empEditId != null" >
+        #{empEditId,jdbcType=BIGINT},
+      </if>
+      <if test="empEditName != null" >
+        #{empEditName,jdbcType=VARCHAR},
+      </if>
+      <if test="empEditTime != null" >
+        #{empEditTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="br.order.pojo.emp.EmployeeExample" resultType="java.lang.Integer" >
+    select count(*) from employee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update employee
+    <set >
+      <if test="record.empId != null" >
+        emp_id = #{record.empId,jdbcType=BIGINT},
+      </if>
+      <if test="record.brUserId != null" >
+        br_user_id = #{record.brUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.departmentId != null" >
+        department_id = #{record.departmentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.empNumber != null" >
+        emp_number = #{record.empNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.empName != null" >
+        emp_name = #{record.empName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.empStatus != null" >
+        emp_status = #{record.empStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.empSex != null" >
+        emp_sex = #{record.empSex,jdbcType=INTEGER},
+      </if>
+      <if test="record.nationId != null" >
+        nation_id = #{record.nationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.empBirthDate != null" >
+        emp_birth_date = #{record.empBirthDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.empIdentityNumber != null" >
+        emp_identity_number = #{record.empIdentityNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.empMaritalStatus != null" >
+        emp_marital_status = #{record.empMaritalStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.empHometown != null" >
+        emp_hometown = #{record.empHometown,jdbcType=VARCHAR},
+      </if>
+      <if test="record.empFamillyAddress != null" >
+        emp_familly_address = #{record.empFamillyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.empPhone != null" >
+        emp_phone = #{record.empPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.empEmail != null" >
+        emp_email = #{record.empEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.empHouseholdType != null" >
+        emp_household_type = #{record.empHouseholdType,jdbcType=INTEGER},
+      </if>
+      <if test="record.empRegisteredAddress != null" >
+        emp_registered_address = #{record.empRegisteredAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.empCreateId != null" >
+        emp_create_id = #{record.empCreateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.empCreateName != null" >
+        emp_create_name = #{record.empCreateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.empCreateTime != null" >
+        emp_create_time = #{record.empCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.empEditId != null" >
+        emp_edit_id = #{record.empEditId,jdbcType=BIGINT},
+      </if>
+      <if test="record.empEditName != null" >
+        emp_edit_name = #{record.empEditName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.empEditTime != null" >
+        emp_edit_time = #{record.empEditTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update employee
+    set emp_id = #{record.empId,jdbcType=BIGINT},
+      br_user_id = #{record.brUserId,jdbcType=BIGINT},
+      department_id = #{record.departmentId,jdbcType=BIGINT},
+      emp_number = #{record.empNumber,jdbcType=VARCHAR},
+      emp_name = #{record.empName,jdbcType=VARCHAR},
+      emp_status = #{record.empStatus,jdbcType=INTEGER},
+      emp_sex = #{record.empSex,jdbcType=INTEGER},
+      nation_id = #{record.nationId,jdbcType=INTEGER},
+      emp_birth_date = #{record.empBirthDate,jdbcType=TIMESTAMP},
+      emp_identity_number = #{record.empIdentityNumber,jdbcType=VARCHAR},
+      emp_marital_status = #{record.empMaritalStatus,jdbcType=INTEGER},
+      emp_hometown = #{record.empHometown,jdbcType=VARCHAR},
+      emp_familly_address = #{record.empFamillyAddress,jdbcType=VARCHAR},
+      emp_phone = #{record.empPhone,jdbcType=VARCHAR},
+      emp_email = #{record.empEmail,jdbcType=VARCHAR},
+      emp_household_type = #{record.empHouseholdType,jdbcType=INTEGER},
+      emp_registered_address = #{record.empRegisteredAddress,jdbcType=VARCHAR},
+      emp_create_id = #{record.empCreateId,jdbcType=BIGINT},
+      emp_create_name = #{record.empCreateName,jdbcType=VARCHAR},
+      emp_create_time = #{record.empCreateTime,jdbcType=TIMESTAMP},
+      emp_edit_id = #{record.empEditId,jdbcType=BIGINT},
+      emp_edit_name = #{record.empEditName,jdbcType=VARCHAR},
+      emp_edit_time = #{record.empEditTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="br.order.pojo.emp.Employee" >
+    update employee
+    <set >
+      <if test="brUserId != null" >
+        br_user_id = #{brUserId,jdbcType=BIGINT},
+      </if>
+      <if test="departmentId != null" >
+        department_id = #{departmentId,jdbcType=BIGINT},
+      </if>
+      <if test="empNumber != null" >
+        emp_number = #{empNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="empName != null" >
+        emp_name = #{empName,jdbcType=VARCHAR},
+      </if>
+      <if test="empStatus != null" >
+        emp_status = #{empStatus,jdbcType=INTEGER},
+      </if>
+      <if test="empSex != null" >
+        emp_sex = #{empSex,jdbcType=INTEGER},
+      </if>
+      <if test="nationId != null" >
+        nation_id = #{nationId,jdbcType=INTEGER},
+      </if>
+      <if test="empBirthDate != null" >
+        emp_birth_date = #{empBirthDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="empIdentityNumber != null" >
+        emp_identity_number = #{empIdentityNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="empMaritalStatus != null" >
+        emp_marital_status = #{empMaritalStatus,jdbcType=INTEGER},
+      </if>
+      <if test="empHometown != null" >
+        emp_hometown = #{empHometown,jdbcType=VARCHAR},
+      </if>
+      <if test="empFamillyAddress != null" >
+        emp_familly_address = #{empFamillyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="empPhone != null" >
+        emp_phone = #{empPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="empEmail != null" >
+        emp_email = #{empEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="empHouseholdType != null" >
+        emp_household_type = #{empHouseholdType,jdbcType=INTEGER},
+      </if>
+      <if test="empRegisteredAddress != null" >
+        emp_registered_address = #{empRegisteredAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="empCreateId != null" >
+        emp_create_id = #{empCreateId,jdbcType=BIGINT},
+      </if>
+      <if test="empCreateName != null" >
+        emp_create_name = #{empCreateName,jdbcType=VARCHAR},
+      </if>
+      <if test="empCreateTime != null" >
+        emp_create_time = #{empCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="empEditId != null" >
+        emp_edit_id = #{empEditId,jdbcType=BIGINT},
+      </if>
+      <if test="empEditName != null" >
+        emp_edit_name = #{empEditName,jdbcType=VARCHAR},
+      </if>
+      <if test="empEditTime != null" >
+        emp_edit_time = #{empEditTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where emp_id = #{empId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="br.order.pojo.emp.Employee" >
+    update employee
+    set br_user_id = #{brUserId,jdbcType=BIGINT},
+      department_id = #{departmentId,jdbcType=BIGINT},
+      emp_number = #{empNumber,jdbcType=VARCHAR},
+      emp_name = #{empName,jdbcType=VARCHAR},
+      emp_status = #{empStatus,jdbcType=INTEGER},
+      emp_sex = #{empSex,jdbcType=INTEGER},
+      nation_id = #{nationId,jdbcType=INTEGER},
+      emp_birth_date = #{empBirthDate,jdbcType=TIMESTAMP},
+      emp_identity_number = #{empIdentityNumber,jdbcType=VARCHAR},
+      emp_marital_status = #{empMaritalStatus,jdbcType=INTEGER},
+      emp_hometown = #{empHometown,jdbcType=VARCHAR},
+      emp_familly_address = #{empFamillyAddress,jdbcType=VARCHAR},
+      emp_phone = #{empPhone,jdbcType=VARCHAR},
+      emp_email = #{empEmail,jdbcType=VARCHAR},
+      emp_household_type = #{empHouseholdType,jdbcType=INTEGER},
+      emp_registered_address = #{empRegisteredAddress,jdbcType=VARCHAR},
+      emp_create_id = #{empCreateId,jdbcType=BIGINT},
+      emp_create_name = #{empCreateName,jdbcType=VARCHAR},
+      emp_create_time = #{empCreateTime,jdbcType=TIMESTAMP},
+      emp_edit_id = #{empEditId,jdbcType=BIGINT},
+      emp_edit_name = #{empEditName,jdbcType=VARCHAR},
+      emp_edit_time = #{empEditTime,jdbcType=TIMESTAMP}
+    where emp_id = #{empId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="br.order.mapper.BrOperationMapper" >
+  <resultMap id="BaseResultMap" type="br.order.pojo.BrOperation" >
+    <id column="operation_id" property="operationId" jdbcType="BIGINT" />
+    <result column="operation_name" property="operationName" jdbcType="VARCHAR" />
+    <result column="operation_describe" property="operationDescribe" jdbcType="VARCHAR" />
+    <result column="permission_id" property="permissionId" jdbcType="BIGINT" />
+    <result column="operation_status" property="operationStatus" jdbcType="INTEGER" />
+    <result column="operation_createtime" property="operationCreatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    operation_id, operation_name, operation_describe, permission_id, operation_status, 
+    operation_createtime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="br.order.pojo.BrOperationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from br_operation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from br_operation
+    where operation_id = #{operationId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from br_operation
+    where operation_id = #{operationId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="br.order.pojo.BrOperationExample" >
+    delete from br_operation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="br.order.pojo.BrOperation" >
+    insert into br_operation (operation_id, operation_name, operation_describe, 
+      permission_id, operation_status, operation_createtime
+      )
+    values (#{operationId,jdbcType=BIGINT}, #{operationName,jdbcType=VARCHAR}, #{operationDescribe,jdbcType=VARCHAR}, 
+      #{permissionId,jdbcType=BIGINT}, #{operationStatus,jdbcType=INTEGER}, #{operationCreatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="br.order.pojo.BrOperation" >
+    insert into br_operation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="operationId != null" >
+        operation_id,
+      </if>
+      <if test="operationName != null" >
+        operation_name,
+      </if>
+      <if test="operationDescribe != null" >
+        operation_describe,
+      </if>
+      <if test="permissionId != null" >
+        permission_id,
+      </if>
+      <if test="operationStatus != null" >
+        operation_status,
+      </if>
+      <if test="operationCreatetime != null" >
+        operation_createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="operationId != null" >
+        #{operationId,jdbcType=BIGINT},
+      </if>
+      <if test="operationName != null" >
+        #{operationName,jdbcType=VARCHAR},
+      </if>
+      <if test="operationDescribe != null" >
+        #{operationDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionId != null" >
+        #{permissionId,jdbcType=BIGINT},
+      </if>
+      <if test="operationStatus != null" >
+        #{operationStatus,jdbcType=INTEGER},
+      </if>
+      <if test="operationCreatetime != null" >
+        #{operationCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="br.order.pojo.BrOperationExample" resultType="java.lang.Integer" >
+    select count(*) from br_operation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update br_operation
+    <set >
+      <if test="record.operationId != null" >
+        operation_id = #{record.operationId,jdbcType=BIGINT},
+      </if>
+      <if test="record.operationName != null" >
+        operation_name = #{record.operationName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operationDescribe != null" >
+        operation_describe = #{record.operationDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permissionId != null" >
+        permission_id = #{record.permissionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.operationStatus != null" >
+        operation_status = #{record.operationStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.operationCreatetime != null" >
+        operation_createtime = #{record.operationCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update br_operation
+    set operation_id = #{record.operationId,jdbcType=BIGINT},
+      operation_name = #{record.operationName,jdbcType=VARCHAR},
+      operation_describe = #{record.operationDescribe,jdbcType=VARCHAR},
+      permission_id = #{record.permissionId,jdbcType=BIGINT},
+      operation_status = #{record.operationStatus,jdbcType=INTEGER},
+      operation_createtime = #{record.operationCreatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="br.order.pojo.BrOperation" >
+    update br_operation
+    <set >
+      <if test="operationName != null" >
+        operation_name = #{operationName,jdbcType=VARCHAR},
+      </if>
+      <if test="operationDescribe != null" >
+        operation_describe = #{operationDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionId != null" >
+        permission_id = #{permissionId,jdbcType=BIGINT},
+      </if>
+      <if test="operationStatus != null" >
+        operation_status = #{operationStatus,jdbcType=INTEGER},
+      </if>
+      <if test="operationCreatetime != null" >
+        operation_createtime = #{operationCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where operation_id = #{operationId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="br.order.pojo.BrOperation" >
+    update br_operation
+    set operation_name = #{operationName,jdbcType=VARCHAR},
+      operation_describe = #{operationDescribe,jdbcType=VARCHAR},
+      permission_id = #{permissionId,jdbcType=BIGINT},
+      operation_status = #{operationStatus,jdbcType=INTEGER},
+      operation_createtime = #{operationCreatetime,jdbcType=TIMESTAMP}
+    where operation_id = #{operationId,jdbcType=BIGINT}
+  </update>
+</mapper>

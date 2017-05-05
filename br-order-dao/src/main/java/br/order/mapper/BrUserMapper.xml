@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="br.order.mapper.BrUserMapper" >
+  <resultMap id="BaseResultMap" type="br.order.pojo.BrUser" >
+    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_login_name" property="userLoginName" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
+    <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+    <result column="user_password" property="userPassword" jdbcType="VARCHAR" />
+    <result column="user_status" property="userStatus" jdbcType="INTEGER" />
+    <result column="user_create_time" property="userCreateTime" jdbcType="TIMESTAMP" />
+    <result column="user_edit_time" property="userEditTime" jdbcType="TIMESTAMP" />
+    <result column="user_edit_id" property="userEditId" jdbcType="BIGINT" />
+    <result column="user_edit_name" property="userEditName" jdbcType="VARCHAR" />
+    <result column="user_login_time" property="userLoginTime" jdbcType="TIMESTAMP" />
+    <result column="user_last_time" property="userLastTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    user_id, user_login_name, user_name, user_phone, user_email, user_password, user_status, 
+    user_create_time, user_edit_time, user_edit_id, user_edit_name, user_login_time, 
+    user_last_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="br.order.pojo.BrUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from br_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from br_user
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from br_user
+    where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="br.order.pojo.BrUserExample" >
+    delete from br_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="br.order.pojo.BrUser" >
+    insert into br_user (user_id, user_login_name, user_name, 
+      user_phone, user_email, user_password, 
+      user_status, user_create_time, user_edit_time, 
+      user_edit_id, user_edit_name, user_login_time, 
+      user_last_time)
+    values (#{userId,jdbcType=BIGINT}, #{userLoginName,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{userPhone,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, 
+      #{userStatus,jdbcType=INTEGER}, #{userCreateTime,jdbcType=TIMESTAMP}, #{userEditTime,jdbcType=TIMESTAMP}, 
+      #{userEditId,jdbcType=BIGINT}, #{userEditName,jdbcType=VARCHAR}, #{userLoginTime,jdbcType=TIMESTAMP}, 
+      #{userLastTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="br.order.pojo.BrUser" >
+    insert into br_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userLoginName != null" >
+        user_login_name,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userPhone != null" >
+        user_phone,
+      </if>
+      <if test="userEmail != null" >
+        user_email,
+      </if>
+      <if test="userPassword != null" >
+        user_password,
+      </if>
+      <if test="userStatus != null" >
+        user_status,
+      </if>
+      <if test="userCreateTime != null" >
+        user_create_time,
+      </if>
+      <if test="userEditTime != null" >
+        user_edit_time,
+      </if>
+      <if test="userEditId != null" >
+        user_edit_id,
+      </if>
+      <if test="userEditName != null" >
+        user_edit_name,
+      </if>
+      <if test="userLoginTime != null" >
+        user_login_time,
+      </if>
+      <if test="userLastTime != null" >
+        user_last_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userLoginName != null" >
+        #{userLoginName,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="userCreateTime != null" >
+        #{userCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userEditTime != null" >
+        #{userEditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userEditId != null" >
+        #{userEditId,jdbcType=BIGINT},
+      </if>
+      <if test="userEditName != null" >
+        #{userEditName,jdbcType=VARCHAR},
+      </if>
+      <if test="userLoginTime != null" >
+        #{userLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userLastTime != null" >
+        #{userLastTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="br.order.pojo.BrUserExample" resultType="java.lang.Integer" >
+    select count(*) from br_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update br_user
+    <set >
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userLoginName != null" >
+        user_login_name = #{record.userLoginName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPhone != null" >
+        user_phone = #{record.userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userEmail != null" >
+        user_email = #{record.userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPassword != null" >
+        user_password = #{record.userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userStatus != null" >
+        user_status = #{record.userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.userCreateTime != null" >
+        user_create_time = #{record.userCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userEditTime != null" >
+        user_edit_time = #{record.userEditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userEditId != null" >
+        user_edit_id = #{record.userEditId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userEditName != null" >
+        user_edit_name = #{record.userEditName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userLoginTime != null" >
+        user_login_time = #{record.userLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userLastTime != null" >
+        user_last_time = #{record.userLastTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update br_user
+    set user_id = #{record.userId,jdbcType=BIGINT},
+      user_login_name = #{record.userLoginName,jdbcType=VARCHAR},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      user_phone = #{record.userPhone,jdbcType=VARCHAR},
+      user_email = #{record.userEmail,jdbcType=VARCHAR},
+      user_password = #{record.userPassword,jdbcType=VARCHAR},
+      user_status = #{record.userStatus,jdbcType=INTEGER},
+      user_create_time = #{record.userCreateTime,jdbcType=TIMESTAMP},
+      user_edit_time = #{record.userEditTime,jdbcType=TIMESTAMP},
+      user_edit_id = #{record.userEditId,jdbcType=BIGINT},
+      user_edit_name = #{record.userEditName,jdbcType=VARCHAR},
+      user_login_time = #{record.userLoginTime,jdbcType=TIMESTAMP},
+      user_last_time = #{record.userLastTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="br.order.pojo.BrUser" >
+    update br_user
+    <set >
+      <if test="userLoginName != null" >
+        user_login_name = #{userLoginName,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        user_phone = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        user_email = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        user_password = #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        user_status = #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="userCreateTime != null" >
+        user_create_time = #{userCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userEditTime != null" >
+        user_edit_time = #{userEditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userEditId != null" >
+        user_edit_id = #{userEditId,jdbcType=BIGINT},
+      </if>
+      <if test="userEditName != null" >
+        user_edit_name = #{userEditName,jdbcType=VARCHAR},
+      </if>
+      <if test="userLoginTime != null" >
+        user_login_time = #{userLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userLastTime != null" >
+        user_last_time = #{userLastTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="br.order.pojo.BrUser" >
+    update br_user
+    set user_login_name = #{userLoginName,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      user_email = #{userEmail,jdbcType=VARCHAR},
+      user_password = #{userPassword,jdbcType=VARCHAR},
+      user_status = #{userStatus,jdbcType=INTEGER},
+      user_create_time = #{userCreateTime,jdbcType=TIMESTAMP},
+      user_edit_time = #{userEditTime,jdbcType=TIMESTAMP},
+      user_edit_id = #{userEditId,jdbcType=BIGINT},
+      user_edit_name = #{userEditName,jdbcType=VARCHAR},
+      user_login_time = #{userLoginTime,jdbcType=TIMESTAMP},
+      user_last_time = #{userLastTime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+</mapper>

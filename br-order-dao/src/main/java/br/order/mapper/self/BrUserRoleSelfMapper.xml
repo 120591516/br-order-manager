@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="br.order.mapper.self.BrUserRoleSelfMapper">
+	<resultMap id="BaseResultMap" type="br.order.pojo.BrUserRole">
+		<id column="user_role_id" property="userRoleId" jdbcType="BIGINT" />
+		<result column="user_id" property="userId" jdbcType="BIGINT" />
+		<result column="role_id" property="roleId" jdbcType="BIGINT" />
+	</resultMap>
+	<resultMap id="UserRoleMap" type="br.order.vo.UserRoleVo">
+		<id column="user_id" property="userId" jdbcType="BIGINT" />
+		<result column="user_login_name" property="userLoginName"
+			jdbcType="VARCHAR" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
+		<result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+		<result column="user_password" property="userPassword"
+			jdbcType="VARCHAR" />
+		<result column="user_status" property="userStatus" jdbcType="INTEGER" />
+		<result column="user_create_time" property="userCreateTime"
+			jdbcType="TIMESTAMP" />
+		<result column="user_edit_time" property="userEditTime"
+			jdbcType="TIMESTAMP" />
+		<result column="user_edit_id" property="userEditId" jdbcType="BIGINT" />
+		<result column="user_edit_name" property="userEditName"
+			jdbcType="VARCHAR" />
+		<result column="user_login_time" property="userLoginTime"
+			jdbcType="TIMESTAMP" />
+		<result column="user_last_time" property="userLastTime"
+			jdbcType="TIMESTAMP" />
+		<result column="roles_form" property="rolesForm" jdbcType="VARCHAR" />
+		<collection property="roles" ofType="br.order.pojo.BrRole">
+			<id column="role_id" property="roleId" jdbcType="BIGINT" />
+			<result column="role_name" property="roleName" jdbcType="VARCHAR" />
+			<result column="role_describe" property="roleDescribe"
+				jdbcType="VARCHAR" />
+			<result column="role_status" property="roleStatus" jdbcType="INTEGER" />
+			<result column="role_create_time" property="roleCreateTime"
+				jdbcType="TIMESTAMP" />
+		</collection>
+	</resultMap>
+	<resultMap type="br.order.vo.UserPermissionVo" id="UserPermissionMap">
+		<id column="permission_id" property="permissionId" jdbcType="BIGINT" />
+		<result column="permission_name" property="permissionName"
+			jdbcType="VARCHAR" />
+		<result column="permission_status" property="permissionStatus"
+			jdbcType="INTEGER" />
+		<result column="permission_url" property="permissionUrl"
+			jdbcType="VARCHAR" />
+		<result column="permission_describe" property="permissionDescribe"
+			jdbcType="VARCHAR" />
+		<result column="permission_level" property="permissionLevel"
+			jdbcType="INTEGER" />
+		<result column="permission_parent_id" property="permissionParentId"
+			jdbcType="INTEGER" />
+		<result column="permission_create_time" property="permissionCreateTime"
+			jdbcType="TIMESTAMP" />
+		<collection property="childrens" ofType="br.order.pojo.BrPermission">
+			<id column="c_permission_id" property="permissionId" jdbcType="BIGINT" />
+			<result column="c_permission_name" property="permissionName"
+				jdbcType="VARCHAR" />
+			<result column="c_permission_status" property="permissionStatus"
+				jdbcType="INTEGER" />
+			<result column="c_permission_url" property="permissionUrl"
+				jdbcType="VARCHAR" />
+			<result column="c_permission_describe" property="permissionDescribe"
+				jdbcType="VARCHAR" />
+			<result column="c_permission_level" property="permissionLevel"
+				jdbcType="INTEGER" />
+			<result column="c_permission_parent_id" property="permissionParentId"
+				jdbcType="INTEGER" />
+			<result column="c_permission_create_time" property="permissionCreateTime"
+				jdbcType="TIMESTAMP" />
+		</collection>
+	</resultMap>
+	<resultMap type="br.order.pojo.permission.RoleVo" id="RoleModelMap">
+		<id column="role_id" property="id" jdbcType="BIGINT" />
+		<result column="role_name" property="roleName" jdbcType="VARCHAR" />
+		<result column="checked" property="checked" jdbcType="BOOLEAN" />
+		<result column="role_describe" property="roleDescribe" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		user_role_id, user_id, role_id
+	</sql>
+	<select id="getUserPermission" resultMap="UserPermissionMap">
+		SELECT DISTINCT
+		brp.permission_id,
+		bp.permission_name,
+		bp.permission_status,
+		bp.permission_url,
+		bp.permission_describe,
+		bp.permission_level,
+		bp.permission_parent_id
+		FROM
+		br_permission AS bp,
+		br_role AS br,
+		br_role_permission AS brp,
+		br_user AS
+		bu,
+		br_user_role AS bur
+		WHERE
+		bu.user_id=#{userId} AND
+		bp.permission_status=0 AND
+		bu.user_id =
+		bur.user_id AND
+		bur.role_id = br.role_id AND
+		br.role_id = brp.role_id
+		AND
+		brp.permission_id = bp.permission_id
+		ORDER BY bp.permission_id
+	</select>
+	<select id="getUserRoleById" resultMap="UserRoleMap">
+		SELECT DISTINCT
+		bu.user_name,
+		br.role_name
+		FROM
+		br_user bu,
+		br_user_role bur,
+		br_role br
+		WHERE
+		bu.user_id = #{userId} AND
+		bu.user_id = bur.user_id
+		AND bur.role_id = br.role_id
+	</select>
+	<select id="getUserVoByPage" resultMap="UserRoleMap">
+		SELECT DISTINCT
+		bu.user_id,
+		bu.user_login_name,
+		bu.user_name,
+		bu.user_phone,
+		bu.user_email,
+		bu.user_status,
+		bu.user_create_time,
+		bu.user_edit_time,
+		bu.user_edit_id,
+		bu.user_edit_name,
+		bu.user_login_time,
+		bu.user_last_time,
+		group_concat(
+		DISTINCT br.role_name
+		ORDER BY
+		br.role_id
+		) AS roles_form
+		FROM
+		br_user AS bu
+		LEFT JOIN br_user_role AS bur ON bu.user_id = bur.user_id
+		LEFT JOIN br_role AS br ON bur.role_id = br.role_id
+		GROUP BY
+		bu.user_id
+		ORDER BY
+		bu.user_status
+	</select>
+	<insert id="insertUserRole">
+		insert into br_user_role values
+		<foreach collection="brUserRoles" item="brUserRole" separator=",">
+			(null,#{brUserRole.userId},#{brUserRole.roleId})
+		</foreach>
+	</insert>
+	<select id="getAllRoles" resultMap="RoleModelMap">
+		SELECT
+		role_id,
+		role_name,
+		role_describe
+		FROM
+		br_role
+		WHERE
+		br_role.role_status = 0
+	</select>
+	<select id="getRolesByUserId" resultMap="RoleModelMap">
+		SELECT
+		br.role_id,
+		br.role_name
+		FROM
+		br_role AS br ,
+		br_user AS bu ,
+		br_user_role
+		AS bur
+		WHERE
+		br.role_status = 0 AND
+		bur.user_id = #{userId} AND
+		bu.user_id = bur.user_id AND
+		br.role_id = bur.role_id
+	</select>
+</mapper>

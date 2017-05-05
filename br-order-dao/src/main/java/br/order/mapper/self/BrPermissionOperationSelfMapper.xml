@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="br.order.mapper.self.BrPermissionOperationSelfMapper">
+	<resultMap id="BaseResultMap" type="br.order.pojo.BrPermissionOperation">
+		<id column="id" property="id" jdbcType="BIGINT" />
+	    <result column="role_permission_id" property="rolePermissionId" jdbcType="BIGINT" />
+	    <result column="operation_id" property="operationId" jdbcType="BIGINT" />
+	    <result column="edit_user_id" property="editUserId" jdbcType="BIGINT" />
+	    <result column="edit_user_name" property="editUserName" jdbcType="VARCHAR" />
+	    <result column="edittime" property="edittime" jdbcType="TIMESTAMP" />
+	    <result column="status" property="status" jdbcType="INTEGER" />
+	    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<!-- 查询选中的可用的操作 -->
+	<select id="getBrPer_OpeListByPerId" resultMap="BaseResultMap" parameterType="long">
+		SELECT
+		b.id,
+		b.role_permission_id,
+		b.operation_id
+		FROM br_permission_operation b
+		WHERE b.status=0 and b.role_permission_id = #{permissionId}
+	</select>
+	<!-- 添加操作 -->
+	<insert id="insertOption">
+		INSERT INTO br_permission_operation (
+						id,
+			 role_permission_id,
+			 operation_id
+						)
+				VALUES
+				(null,#{rolePermissionId},#{operationId})
+	</insert>
+</mapper>
